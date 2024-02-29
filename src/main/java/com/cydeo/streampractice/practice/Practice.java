@@ -93,8 +93,12 @@ public class Practice {
 
     // Display all the departments' managers' first names
     public static List<String> getAllDepartmentManagerFirstNames() {
-        //TODO Implement the method
-        return new ArrayList<>();
+
+        return departmentService.readAll().stream()
+                .map(department -> department.getManager().getFirstName())
+                .collect(Collectors.toList());
+
+
     }
 
     // Display all the departments where manager name of the department is 'Steven'
