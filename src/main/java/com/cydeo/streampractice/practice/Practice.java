@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class Practice {
@@ -46,12 +47,12 @@ public class Practice {
 
     // Display all the countries
     public static List<Country> getAllCountries() {
-      return countryService.readAll();
+        return countryService.readAll();
     }
 
     // Display all the departments
     public static List<Department> getAllDepartments() {
-       return departmentService.readAll();
+        return departmentService.readAll();
     }
 
     // Display all the jobs
@@ -71,13 +72,15 @@ public class Practice {
 
     // Display all the job histories
     public static List<JobHistory> getAllJobHistories() {
-       return jobHistoryService.readAll();
+        return jobHistoryService.readAll();
     }
 
     // Display all the employees' first names
     public static List<String> getAllEmployeesFirstName() {
-        //TODO Implement the method
-        return new ArrayList<>();
+
+      return   employeeService.readAll().stream()
+                .map(Employee::getFirstName)
+                .collect(Collectors.toList());
     }
 
     // Display all the countries' names
