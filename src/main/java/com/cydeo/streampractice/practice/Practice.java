@@ -129,7 +129,9 @@ public class Practice {
     // Display all the departments where the region of department is 'Europe'
     public static List<Department> getAllDepartmentsWhereRegionOfCountryIsEurope() {
          List<Department> departments = departmentService.readAll().stream()
-                 .filter(department -> department.getLocation().getCountry().getRegion().equals("Europe"))
+                 .filter(department -> department.getLocation().getCountry().getRegion().getRegionName().equalsIgnoreCase("Europe"))
+                 .collect(Collectors.toList());
+         return departments;
 
     }
 
