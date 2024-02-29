@@ -4,10 +4,7 @@ import com.cydeo.streampractice.model.*;
 import com.cydeo.streampractice.service.*;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -115,19 +112,25 @@ public class Practice {
 
         return departmentService.readAll().stream()
                 .filter(department -> department.getLocation().getPostalCode().equals("98199"))
+                .collect(Collectors.toList());
 
     }
 
     // Display the region of the IT department
     public static Region getRegionOfITDepartment() throws Exception {
-        //TODO Implement the method
-        return new Region();
+
+        Optional<Region> regionIT = departmentService.readAll().stream()
+                .filter(department -> department.getDepartmentName().equalsIgnoreCase("IT"))
+                .map(department -> department.getLocation().getCountry().getRegion())
+                .findFirst();
+        return regionIT.orElse(null);
     }
 
     // Display all the departments where the region of department is 'Europe'
     public static List<Department> getAllDepartmentsWhereRegionOfCountryIsEurope() {
-        //TODO Implement the method
-        return new ArrayList<>();
+         List<Department> departments = departmentService.readAll().stream()
+                 .filter(department -> department.getLocation().getCountry().getRegion().equals("Europe"))
+
     }
 
     // Display if there is any employee with salary less than 1000. If there is none, the method should return true
