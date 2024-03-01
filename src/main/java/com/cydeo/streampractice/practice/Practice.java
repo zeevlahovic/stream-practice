@@ -137,26 +137,34 @@ public class Practice {
 
     // Display if there is any employee with salary less than 1000. If there is none, the method should return true
     public static boolean checkIfThereIsNoSalaryLessThan1000() {
-        //TODO Implement the method
-        return false;
+       boolean salaryLessThan1000 = employeeService.readAll().stream()
+                .noneMatch(employee -> employee.getSalary()<1000);
+        return salaryLessThan1000;
     }
 
     // Check if the salaries of all the employees in IT department are greater than 2000 (departmentName: IT)
     public static boolean checkIfThereIsAnySalaryGreaterThan2000InITDepartment() {
-        //TODO Implement the method
-        return false;
+     boolean greaterThan2000 = employeeService.readAll().stream()
+              .filter(employee -> employee.getDepartment().getDepartmentName().equalsIgnoreCase("IT"))
+              .anyMatch(employee -> employee.getSalary()>2000);
+
+        return greaterThan2000;
     }
 
     // Display all the employees whose salary is less than 5000
     public static List<Employee> getAllEmployeesWithLessSalaryThan5000() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        List<Employee> lessThan500 = employeeService.readAll().stream()
+                .filter(employee -> employee.getSalary() < 5000)
+                .collect(Collectors.toList());
+        return lessThan500;
     }
 
     // Display all the employees whose salary is between 6000 and 7000
     public static List<Employee> getAllEmployeesSalaryBetween() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        List btw6000and7000 = employeeService.readAll().stream()
+                .filter(employee -> employee.getSalary() > 6000 && employee.getSalary()<7000)
+                .collect(Collectors.toList());
+        return btw6000and7000;
     }
 
     // Display the salary of the employee Grant Douglas (lastName: Grant, firstName: Douglas)
