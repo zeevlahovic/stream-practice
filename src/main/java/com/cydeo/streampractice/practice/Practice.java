@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class Practice {
@@ -75,7 +76,7 @@ public class Practice {
     // Display all the employees' first names
     public static List<String> getAllEmployeesFirstName() {
 
-      return   employeeService.readAll().stream()
+        return employeeService.readAll().stream()
                 .map(Employee::getFirstName)
                 .collect(Collectors.toList());
     }
@@ -128,25 +129,25 @@ public class Practice {
 
     // Display all the departments where the region of department is 'Europe'
     public static List<Department> getAllDepartmentsWhereRegionOfCountryIsEurope() {
-         List<Department> departments = departmentService.readAll().stream()
-                 .filter(department -> department.getLocation().getCountry().getRegion().getRegionName().equalsIgnoreCase("Europe"))
-                 .collect(Collectors.toList());
-         return departments;
+        List<Department> departments = departmentService.readAll().stream()
+                .filter(department -> department.getLocation().getCountry().getRegion().getRegionName().equalsIgnoreCase("Europe"))
+                .collect(Collectors.toList());
+        return departments;
 
     }
 
     // Display if there is any employee with salary less than 1000. If there is none, the method should return true
     public static boolean checkIfThereIsNoSalaryLessThan1000() {
-       boolean salaryLessThan1000 = employeeService.readAll().stream()
-                .noneMatch(employee -> employee.getSalary()<1000);
+        boolean salaryLessThan1000 = employeeService.readAll().stream()
+                .noneMatch(employee -> employee.getSalary() < 1000);
         return salaryLessThan1000;
     }
 
     // Check if the salaries of all the employees in IT department are greater than 2000 (departmentName: IT)
     public static boolean checkIfThereIsAnySalaryGreaterThan2000InITDepartment() {
-     boolean greaterThan2000 = employeeService.readAll().stream()
-              .filter(employee -> employee.getDepartment().getDepartmentName().equalsIgnoreCase("IT"))
-              .anyMatch(employee -> employee.getSalary()>2000);
+        boolean greaterThan2000 = employeeService.readAll().stream()
+                .filter(employee -> employee.getDepartment().getDepartmentName().equalsIgnoreCase("IT"))
+                .anyMatch(employee -> employee.getSalary() > 2000);
 
         return greaterThan2000;
     }
@@ -162,32 +163,60 @@ public class Practice {
     // Display all the employees whose salary is between 6000 and 7000
     public static List<Employee> getAllEmployeesSalaryBetween() {
         List btw6000and7000 = employeeService.readAll().stream()
-                .filter(employee -> employee.getSalary() > 6000 && employee.getSalary()<7000)
+                .filter(employee -> employee.getSalary() > 6000 && employee.getSalary() < 7000)
                 .collect(Collectors.toList());
         return btw6000and7000;
     }
 
     // Display the salary of the employee Grant Douglas (lastName: Grant, firstName: Douglas)
     public static Long getGrantDouglasSalary() throws Exception {
-        //TODO Implement the method
-        return 1L;
+        Optional<Long> grantDougSalary = employeeService.readAll().stream()
+                .filter(employee -> employee.getFirstName().equalsIgnoreCase("Douglas")
+                        && employee.getLastName().equalsIgnoreCase("Grant"))
+                .map(Employee::getSalary)
+                .findFirst();
+        if (grantDougSalary.isPresent()) {
+            return grantDougSalary.get();
+        } else {
+            throw new RuntimeException("Name doesn't exist");
+        }
     }
 
     // Display the maximum salary an employee gets
     public static Long getMaxSalary() throws Exception {
-        return 1L;
+        Optional<Long> maxSalary = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .reduce(Long::max);
+        if (maxSalary.isPresent()) {
+            return maxSalary.get();
+        } else {
+            throw new RuntimeException();
+        }
+
     }
 
     // Display the employee(s) who gets the maximum salary
     public static List<Employee> getMaxSalaryEmployee() {
-        //TODO Implement the method
-        return new ArrayList<>();
+
+        Optional<Long> maxSalaryOptional = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .max(Comparator.naturalOrder());
+
+        return getAllEmployees().stream()
+                .filter(employee -> employee.getSalary().equals(maxSalaryOptional.get()))
+                .collect(Collectors.toList());
+
     }
 
     // Display the max salary employee's job
     public static Job getMaxSalaryEmployeeJob() throws Exception {
-        //TODO Implement the method
-        return new Job();
+       Optional<Employee> maxSalaryEmployees = getAllEmployees().stream()
+               .max(Comparator.comparing(Employee::getSalary));
+
+
+       return maxSalaryEmployees.map(Employee::getJob).get();
+
+
     }
 
     // Display the max salary in Americas Region
