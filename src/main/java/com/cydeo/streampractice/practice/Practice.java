@@ -271,8 +271,13 @@ public class Practice {
 
     // Display the employee(s) who gets the minimum salary
     public static List<Employee> getMinSalaryEmployee() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        Optional<Long> optional = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .min(Comparator.naturalOrder());
+        Long minSalary = optional.get();
+        return getAllEmployees().stream()
+                .filter(employee -> employee.getSalary().equals(minSalary))
+                .collect(Collectors.toList());
     }
 
     // Display the second minimum salary an employee gets
