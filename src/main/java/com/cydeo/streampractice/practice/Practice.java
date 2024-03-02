@@ -292,20 +292,38 @@ public class Practice {
 
     // Display the employee(s) who gets the second minimum salary
     public static List<Employee> getSecondMinSalaryEmployee() {
-        //TODO Implement the method
-        return new ArrayList<>();
+      List<Long> empSalaries = getAllEmployees().stream()
+               .map(Employee::getSalary)
+              .sorted(Comparator.naturalOrder())
+               .collect(Collectors.toList());
+      return getAllEmployees().stream()
+              .filter(employee -> employee.getSalary().equals(empSalaries.get(1)))
+              .collect(Collectors.toList());
     }
 
     // Display the average salary of the employees
     public static Double getAverageSalary() {
-        //TODO Implement the method
-        return 1d;
+        List<Long> salaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .collect(Collectors.toList());
+      Optional<Long> sumSalaries = getAllEmployees().stream()
+               .map(Employee::getSalary)
+               .reduce(Long::sum);
+       return   ((double)sumSalaries.get() / salaries.size());
     }
 
     // Display all the employees who are making more than average salary
     public static List<Employee> getAllEmployeesAboveAverage() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        List<Long> salaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .collect(Collectors.toList());
+        Optional<Long> sumSalaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .reduce(Long::sum);
+           Long avrSalary = sumSalaries.get() / salaries.size();
+           return getAllEmployees().stream()
+                   .filter(employee -> employee.getSalary() > avrSalary)
+                   .collect(Collectors.toList());
     }
 
     // Display all the employees who are making less than average salary
