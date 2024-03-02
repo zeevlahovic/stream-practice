@@ -238,9 +238,9 @@ public class Practice {
                 .map(Employee::getSalary)
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
-        if (maxSalaries.size() >=2){
+        if (maxSalaries.size() >= 2) {
             return maxSalaries.get(1);
-        }else {
+        } else {
             throw new RuntimeException("there is only 1 salary");
         }
     }
@@ -259,14 +259,14 @@ public class Practice {
 
     // Display the minimum salary an employee gets
     public static Long getMinSalary() throws Exception {
-       Optional<Long> minSalary = getAllEmployees().stream()
-               .map(Employee::getSalary)
-               .min(Comparator.naturalOrder());
-       if (minSalary.isPresent()){
-           return minSalary.get();
-       }else {
-           throw new RuntimeException("no such salary");
-       }
+        Optional<Long> minSalary = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .min(Comparator.naturalOrder());
+        if (minSalary.isPresent()) {
+            return minSalary.get();
+        } else {
+            throw new RuntimeException("no such salary");
+        }
     }
 
     // Display the employee(s) who gets the minimum salary
@@ -282,8 +282,12 @@ public class Practice {
 
     // Display the second minimum salary an employee gets
     public static Long getSecondMinSalary() throws Exception {
-        //TODO Implement the method
-        return 1L;
+        List<Long> minSalaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .sorted(Comparator.naturalOrder())
+                .collect(Collectors.toList());
+        return minSalaries.get(1);
+
     }
 
     // Display the employee(s) who gets the second minimum salary
