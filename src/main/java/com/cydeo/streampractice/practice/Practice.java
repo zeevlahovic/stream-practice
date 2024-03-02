@@ -303,48 +303,23 @@ public class Practice {
 
     // Display the average salary of the employees
     public static Double getAverageSalary() {
-        List<Long> salaries = getAllEmployees().stream()
-                .map(Employee::getSalary)
-                .collect(Collectors.toList());
-      Optional<Long> sumSalaries = getAllEmployees().stream()
-               .map(Employee::getSalary)
-               .reduce(Long::sum);
-       return   ((double)sumSalaries.get() / salaries.size());
+     return getAllEmployees().stream()
+             .collect(Collectors.averagingDouble(Employee::getSalary));
     }
 
     // Display all the employees who are making more than average salary
     public static List<Employee> getAllEmployeesAboveAverage() {
-        //get all salaries into a list
-        List<Long> salaries = getAllEmployees().stream()
-                .map(Employee::getSalary)
-                .collect(Collectors.toList());
-        //get the sum of all salaries
-        Optional<Long> sumSalaries = getAllEmployees().stream()
-                .map(Employee::getSalary)
-                .reduce(Long::sum);
-        //find an avg salary by dev sum with the size
-           Long avrSalary = sumSalaries.get() / salaries.size();
-           //return the list with salaries above avg
+
            return getAllEmployees().stream()
-                   .filter(employee -> employee.getSalary() > avrSalary)
+                   .filter(employee -> employee.getSalary() >getAverageSalary())
                    .collect(Collectors.toList());
     }
 
     // Display all the employees who are making less than average salary
     public static List<Employee> getAllEmployeesBelowAverage() {
-        //get all salaries into a list
-        List<Long> salaries = getAllEmployees().stream()
-                .map(Employee::getSalary)
-                .collect(Collectors.toList());
-        //get the sum of all salaries
-        Optional<Long> sumSalaries = getAllEmployees().stream()
-                .map(Employee::getSalary)
-                .reduce(Long::sum);
-        //find an avg salary by dev sum with the size
-        Long avrSalary = sumSalaries.get() / salaries.size();
-        //return the list with salaries below avg
+
         return getAllEmployees().stream()
-                .filter(employee -> employee.getSalary() < avrSalary)
+                .filter(employee -> employee.getSalary() < getAverageSalary())
                 .collect(Collectors.toList());
     }
 
@@ -357,8 +332,8 @@ public class Practice {
 
     // Display the total number of the departments
     public static Long getTotalDepartmentsNumber() {
-        //TODO Implement the method
-        return 1L;
+        List<Department> allDepartments = new ArrayList<>(getAllDepartments());
+        return (long)allDepartments.size();
     }
 
     // Display the employee whose first name is 'Alyssa' and manager's first name is 'Eleni' and department name is 'Sales'
