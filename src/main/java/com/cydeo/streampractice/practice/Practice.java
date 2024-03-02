@@ -210,37 +210,63 @@ public class Practice {
 
     // Display the max salary employee's job
     public static Job getMaxSalaryEmployeeJob() throws Exception {
-       Optional<Employee> maxSalaryEmployees = getAllEmployees().stream()
-               .max(Comparator.comparing(Employee::getSalary));
+        Optional<Employee> maxSalaryEmployees = getAllEmployees().stream()
+                .max(Comparator.comparing(Employee::getSalary));
 
-
-       return maxSalaryEmployees.map(Employee::getJob).get();
-
-
+        return maxSalaryEmployees.map(Employee::getJob).get();
     }
 
     // Display the max salary in Americas Region
     public static Long getMaxSalaryInAmericasRegion() throws Exception {
-        //TODO Implement the method
-        return 1L;
+        List<Employee> americasRegEmp = getAllEmployees().stream()
+                .filter(e -> e.getDepartment().getLocation().getCountry().getRegion().getRegionName().equalsIgnoreCase("Americas"))
+                .collect(Collectors.toList());
+        Optional<Long> maxSalary = americasRegEmp.stream()
+                .map(Employee::getSalary)
+                .max(Comparator.naturalOrder());
+        if (maxSalary.isPresent()) {
+            return maxSalary.get();
+        } else {
+            throw new Exception("no such salary");
+        }
+
     }
 
     // Display the second maximum salary an employee gets
     public static Long getSecondMaxSalary() throws Exception {
-        //TODO Implement the method
-        return 1L;
+        List<Long> maxSalaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        if (maxSalaries.size() >=2){
+            return maxSalaries.get(1);
+        }else {
+            throw new RuntimeException("there is only 1 salary");
+        }
     }
 
     // Display the employee(s) who gets the second maximum salary
     public static List<Employee> getSecondMaxSalaryEmployee() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        List<Long> maxSalaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+
+        return getAllEmployees().stream()
+                .filter(employee -> employee.getSalary().equals(maxSalaries.get(1)))
+                .collect(Collectors.toList());
     }
 
     // Display the minimum salary an employee gets
     public static Long getMinSalary() throws Exception {
-        //TODO Implement the method
-        return 1L;
+       Optional<Long> minSalary = getAllEmployees().stream()
+               .map(Employee::getSalary)
+               .min(Comparator.naturalOrder());
+       if (minSalary.isPresent()){
+           return minSalary.get();
+       }else {
+           throw new RuntimeException("no such salary");
+       }
     }
 
     // Display the employee(s) who gets the minimum salary
