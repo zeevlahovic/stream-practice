@@ -332,8 +332,20 @@ public class Practice {
 
     // Display all the employees who are making less than average salary
     public static List<Employee> getAllEmployeesBelowAverage() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        //get all salaries into a list
+        List<Long> salaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .collect(Collectors.toList());
+        //get the sum of all salaries
+        Optional<Long> sumSalaries = getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .reduce(Long::sum);
+        //find an avg salary by dev sum with the size
+        Long avrSalary = sumSalaries.get() / salaries.size();
+        //return the list with salaries below avg
+        return getAllEmployees().stream()
+                .filter(employee -> employee.getSalary() < avrSalary)
+                .collect(Collectors.toList());
     }
 
     // Display all the employees separated based on their department id number
