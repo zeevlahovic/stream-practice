@@ -392,14 +392,15 @@ public class Practice {
     // Display all the employees whose first name starts with 'A'
     public static List<Employee> getAllEmployeesFirstNameStartsWithA() {
       return getAllEmployees().stream()
-              .filter(employee -> employee.getFirstName().startsWith("A"))
+              .filter(employee -> employee.getFirstName().toLowerCase().startsWith("a"))
               .collect(Collectors.toList());
     }
 
     // Display all the employees whose job id contains 'IT'
     public static List<Employee> getAllEmployeesJobIdContainsIT() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        return getAllEmployees().stream()
+                .filter(employee -> employee.getJob().getId().toLowerCase().contains("it"))
+                .collect(Collectors.toList());
     }
 
     // Display the number of employees whose job title is programmer and department name is 'IT'
