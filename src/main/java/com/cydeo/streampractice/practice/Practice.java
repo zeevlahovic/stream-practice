@@ -391,8 +391,9 @@ public class Practice {
 
     // Display all the employees whose first name starts with 'A'
     public static List<Employee> getAllEmployeesFirstNameStartsWithA() {
-        //TODO Implement the method
-        return new ArrayList<>();
+      return getAllEmployees().stream()
+              .filter(employee -> employee.getFirstName().startsWith("A"))
+              .collect(Collectors.toList());
     }
 
     // Display all the employees whose job id contains 'IT'
