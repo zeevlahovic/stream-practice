@@ -446,9 +446,19 @@ public class Practice {
     }
 
     // Display the employee(s) with the longest full name(s)
-    public static List<Employee> getLongestNamedEmployee() {
-        //TODO Implement the method
-        return new ArrayList<>();
+    public static List<Employee> getLongestNamedEmployee()  {
+       List<String> fullNames = getAllEmployees().stream()
+                .map(employee -> employee.getFirstName() + employee.getLastName())
+                .collect(Collectors.toList());
+       List<Integer> list = fullNames.stream()
+               .map(String::length)
+               .sorted(Comparator.reverseOrder())
+               .collect(Collectors.toList());
+       Integer longestName = list.get(0);
+      return getAllEmployees().stream()
+               .filter(employee -> employee.getFirstName().length()+employee.getLastName().length() == longestName)
+               .collect(Collectors.toList());
+
     }
 
     // Display all the employees whose department id is 90, 60, 100, 120, or 130
