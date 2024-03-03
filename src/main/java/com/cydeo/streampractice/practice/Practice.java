@@ -414,8 +414,11 @@ public class Practice {
 
     // Display all the employees whose department id is 50, 80, or 100
     public static List<Employee> getAllEmployeesDepartmentIdIs50or80or100() {
-        //TODO Implement the method
-        return new ArrayList<>();
+      return getAllEmployees().stream()
+              .filter(employee -> employee.getDepartment().getId()==50 ||
+                      employee.getDepartment().getId() == 80 ||
+                      employee.getDepartment().getId() == 100)
+              .collect(Collectors.toList());
     }
 
     // Display the initials of all the employees
