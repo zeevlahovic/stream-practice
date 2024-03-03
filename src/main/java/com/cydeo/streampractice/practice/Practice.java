@@ -425,12 +425,9 @@ public class Practice {
     // Note: You can assume that there is no middle name
     public static List<String> getAllEmployeesInitials() {
       return getAllEmployees().stream()
-                .map(employee -> {
-                    String firstNameInitial = employee.getFirstName().substring(0, 1);
-                    String lastNameInitial = employee.getLastName().substring(0, 1);
-                    return firstNameInitial + lastNameInitial;
-                })
-                .collect(Collectors.toList());
+                .map(employee -> employee.getFirstName().charAt(0) + "" + employee.getLastName().charAt(0))
+              .collect(Collectors.toList());
+
     }
 
     // Display the full names of all the employees
