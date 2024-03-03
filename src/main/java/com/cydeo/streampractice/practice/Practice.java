@@ -4,6 +4,7 @@ import com.cydeo.streampractice.model.*;
 import com.cydeo.streampractice.service.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -338,26 +339,33 @@ public class Practice {
 
     // Display the employee whose first name is 'Alyssa' and manager's first name is 'Eleni' and department name is 'Sales'
     public static Employee getEmployeeWhoseFirstNameIsAlyssaAndManagersFirstNameIsEleniAndDepartmentNameIsSales() throws Exception {
-        //TODO Implement the method
-        return new Employee();
+      List<Employee> employees= getAllEmployees().stream()
+               .filter(employee -> employee.getFirstName().equalsIgnoreCase("Alyssa"))
+               .filter(employee -> employee.getManager().getFirstName().equalsIgnoreCase("Eleni"))
+               .filter(employee -> employee.getDepartment().getDepartmentName().equalsIgnoreCase("Sales"))
+               .collect(Collectors.toList());
+      return employees.get(0);
     }
 
     // Display all the job histories in ascending order by start date
     public static List<JobHistory> getAllJobHistoriesInAscendingOrder() {
-        //TODO Implement the method
-        return new ArrayList<>();
+      return getAllJobHistories().stream()
+              .sorted(Comparator.comparing(JobHistory::getStartDate))
+              .collect(Collectors.toList());
     }
 
     // Display all the job histories in descending order by start date
     public static List<JobHistory> getAllJobHistoriesInDescendingOrder() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        return getAllJobHistories().stream()
+                .sorted(Comparator.comparing(JobHistory::getStartDate).reversed())
+                .collect(Collectors.toList());
     }
 
     // Display all the job histories where the start date is after 01.01.2005
     public static List<JobHistory> getAllJobHistoriesStartDateAfterFirstDayOfJanuary2005() {
-        //TODO Implement the method
-        return new ArrayList<>();
+       return getAllJobHistories().stream()
+               .filter(jobHistory -> jobHistory.getStartDate().isAfter(LocalDate.of(2005,01,01)))
+               .collect(Collectors.toList());
     }
 
     // Display all the job histories where the end date is 31.12.2007 and the job title of job is 'Programmer'
