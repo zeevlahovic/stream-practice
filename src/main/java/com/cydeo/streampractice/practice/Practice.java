@@ -370,8 +370,12 @@ public class Practice {
 
     // Display all the job histories where the end date is 31.12.2007 and the job title of job is 'Programmer'
     public static List<JobHistory> getAllJobHistoriesEndDateIsLastDayOfDecember2007AndJobTitleIsProgrammer() {
-        //TODO Implement the method
-        return new ArrayList<>();
+        return getAllJobHistories().stream()
+                .filter(jobHistory -> jobHistory.getEndDate().equals(LocalDate.of(2007,12,31)))
+                .filter(jobHistory -> jobHistory.getJob().getJobTitle().equalsIgnoreCase("Programmer"))
+                .collect(Collectors.toList());
+
+
     }
 
     // Display the employee whose job history start date is 01.01.2007 and job history end date is 31.12.2007 and department's name is 'Shipping'
