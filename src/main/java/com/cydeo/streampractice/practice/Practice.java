@@ -441,7 +441,7 @@ public class Practice {
     public static Integer getLongestNameLength() throws Exception {
      Optional<Integer> longestName = getAllEmployeesFullNames().stream()
                 .map(String::length)
-                .max(Comparator.comparing(Integer::byteValue));
+                .max(Comparator.comparing(Integer::intValue));
      return longestName.get();
     }
 
