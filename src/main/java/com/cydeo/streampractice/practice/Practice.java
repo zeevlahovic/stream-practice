@@ -380,8 +380,13 @@ public class Practice {
 
     // Display the employee whose job history start date is 01.01.2007 and job history end date is 31.12.2007 and department's name is 'Shipping'
     public static Employee getEmployeeOfJobHistoryWhoseStartDateIsFirstDayOfJanuary2007AndEndDateIsLastDayOfDecember2007AndDepartmentNameIsShipping() throws Exception {
-        //TODO Implement the method
-        return new Employee();
+     Optional<JobHistory> jobHistoryResult = getAllJobHistories().stream()
+             .filter(jobHistory -> jobHistory.getStartDate().equals(LocalDate.of(2007,01,01)))
+             .filter(jobHistory -> jobHistory.getEndDate().equals(LocalDate.of(2007,12,31)))
+             .filter(jobHistory -> jobHistory.getDepartment().getDepartmentName().equalsIgnoreCase("Shipping"))
+             .findFirst();
+    return jobHistoryResult.get().getEmployee();
+
     }
 
     // Display all the employees whose first name starts with 'A'
