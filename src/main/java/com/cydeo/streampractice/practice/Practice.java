@@ -463,8 +463,13 @@ public class Practice {
 
     // Display all the employees whose department id is 90, 60, 100, 120, or 130
     public static List<Employee> getAllEmployeesDepartmentIdIs90or60or100or120or130() {
-        //TODO Implement the method
-        return new ArrayList<>();
+     return getAllEmployees().stream()
+             .filter(employee -> employee.getDepartment().getId()==90||
+                     employee.getDepartment().getId()==60 ||
+                     employee.getDepartment().getId()==100 ||
+                     employee.getDepartment().getId()==120 ||
+                     employee.getDepartment().getId()==130)
+             .collect(Collectors.toList());
     }
 
     // Display all the employees whose department id is NOT 90, 60, 100, 120, or 130
