@@ -439,8 +439,11 @@ public class Practice {
 
     // Display the length of the longest full name(s)
     public static Integer getLongestNameLength() throws Exception {
-        //TODO Implement the method
-        return 1;
+        List<Integer> allEmployees =getAllEmployeesFullNames().stream()
+                .map(String::length)
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
+        return allEmployees.get(0);
     }
 
     // Display the employee(s) with the longest full name(s)
